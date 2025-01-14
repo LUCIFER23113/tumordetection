@@ -106,7 +106,7 @@ class BrainTumorModel(nn.Module):
 def load_model():
     model_path = "brain_tumor_trained_f.pth"
     if not os.path.exists(model_path):
-        url = "https://drive.google.com/file/d/1ekX1mO2kNG43YNK38PxH_rLFmxsNkkKj/view?usp=sharing "  # Replace with your file's ID
+        url = "https://drive.google.com/uc?id=1ekX1mO2kNG43YNK38PxH_rLFmxsNkkKj"  # Corrected URL
         gdown.download(url, model_path, quiet=False)
     model = BrainTumorModel(num_classes=17)
     model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
