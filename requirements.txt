@@ -1,5 +1,4 @@
 torch
-torch.nn
 PIL
 torchvision
 torchaudio
