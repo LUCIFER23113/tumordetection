@@ -169,7 +169,7 @@ sample_images = os.listdir(SAMPLE_IMAGES_PATH)
 # Display the sample images as clickable thumbnails
 st.sidebar.write("Click on a sample image to test the model:")
 
-sample_images_selected = st.sidebar.selectbox("Select a sample image:", sample_images)
+sample_images_selected = st.sidebar.selectbox("Select a sample image:",[""]+ sample_images)
 
 # Show the selected image in the main area
 if sample_images_selected:
