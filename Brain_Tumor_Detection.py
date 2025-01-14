@@ -100,7 +100,7 @@ st.set_page_config(
 import torch
 from torchvision import transforms
 from PIL import Image
-from Model_Architechture import BrainTumorModel
+# from Model_Architechture import BrainTumorModel
 
 @st.cache_resource
 def load_model():
