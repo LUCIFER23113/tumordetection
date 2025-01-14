@@ -1,7 +1,20 @@
+import os
+import gdown
 import streamlit as st
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision import transforms
+from PIL import Image
 
+# Set Streamlit page configuration
+st.set_page_config(
+    page_title="Brain Tumor Classification",
+    page_icon="🧠",
+    layout="centered"
+)
+
+# Define the model architecture
 class BrainTumorModel(nn.Module):
     def __init__(self, num_classes):
         super(BrainTumorModel, self).__init__()
@@ -56,59 +69,51 @@ class BrainTumorModel(nn.Module):
         self.fc3 = nn.Linear(4096, num_classes)
 
     def forward(self, x):
-        # Convolutional Block 1
+        # Apply convolutional blocks
         x = F.relu(self.batchnorm1_1(self.conv1_1(x)))
         x = F.relu(self.batchnorm1_2(self.conv1_2(x)))
         x = self.maxpool1(x)
 
-        # Convolutional Block 2
         x = F.relu(self.batchnorm2_1(self.conv2_1(x)))
         x = F.relu(self.batchnorm2_2(self.conv2_2(x)))
         x = self.maxpool2(x)
 
-        # Convolutional Block 3
         x = F.relu(self.batchnorm3_1(self.conv3_1(x)))
         x = F.relu(self.batchnorm3_2(self.conv3_2(x)))
         x = F.relu(self.batchnorm3_3(self.conv3_3(x)))
         x = self.maxpool3(x)
 
-        # Convolutional Block 4
         x = F.relu(self.batchnorm4_1(self.conv4_1(x)))
         x = F.relu(self.batchnorm4_2(self.conv4_2(x)))
         x = F.relu(self.batchnorm4_3(self.conv4_3(x)))
         x = self.maxpool4(x)
 
-        # Convolutional Block 5
         x = F.relu(self.batchnorm5_1(self.conv5_1(x)))
         x = F.relu(self.batchnorm5_2(self.conv5_2(x)))
         x = F.relu(self.batchnorm5_3(self.conv5_3(x)))
         x = self.maxpool5(x)
 
-        # Fully Connected Layers
+        # Apply fully connected layers
         x = self.flatten(x)
         x = F.relu(self.batchnorm_fc1(self.fc1(x)))
         x = F.relu(self.batchnorm_fc2(self.fc2(x)))
         x = self.fc3(x)
 
         return x
-st.set_page_config(
-    page_title="Brain Tumor Classification",
-    page_icon="🧠",
-    layout="centered"
-)
 
-import torch
-from torchvision import transforms
-from PIL import Image
-# from Model_Architechture import BrainTumorModel
-
+# Dynamic model loader with caching
 @st.cache_resource
 def load_model():
+    model_path = "brain_tumor_trained_f.pth"
+    if not os.path.exists(model_path):
+        url = "https://drive.google.com/uc?id=YOUR_FILE_ID"  # Replace with your file's ID
+        gdown.download(url, model_path, quiet=False)
     model = BrainTumorModel(num_classes=17)
-    model.load_state_dict(torch.load("brain_tumor_trained_f.pth", map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
     model.eval()
     return model
 
+# Load the model
 model = load_model()
 
 label_map = {
