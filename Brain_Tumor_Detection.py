@@ -146,9 +146,9 @@ transform = transforms.Compose([
 
 st.markdown("<h1 style='text-align: center; color: #4CAF50;'>Brain Tumor Detection Model 🧠</h1>", unsafe_allow_html=True)
 st.write(
-    "Welcome Every Tech Enthisiast who came to my project of **Brain Tumor Detection!!!!**                         "
-    "So Please first try out this model by testing using 5-6 images from the sidebar to check the accuracy of model"
-    "For the ease to verification the Images are named with appropriate labels so if Image name and Prediction is correct then model is doing great"
+    "Welcome Every Tech Enthisiast who came to my project of **Brain Tumor Detection!!!!**                                                             "
+    "So Please first try out this model by testing using 5-6 images from the sidebar to check the accuracy of model                                            "
+    "For the ease to verification the Images are named with appropriate labels so if Image name and Prediction is correct then model is doing great                "
     "Upload an **MRI scan** at sidebar to classify the brain tumor type. "
     "My model will predict the tumor category in just a few seconds!"
 )
