@@ -1,8 +1,8 @@
-Brain Tumor Detection
+**Brain Tumor Detection**
 
 This repository contains a project for detecting brain tumors using machine learning and deep learning techniques. The project includes a trained model, a simple Streamlit interface for predictions, and all necessary scripts for training and deployment.
 
-Features
+**Features**
 
 Tumor Detection: Detects the presence of a brain tumor from medical images.
 
@@ -12,20 +12,18 @@ Model Training: Includes scripts to train the model from scratch.
 
 Visualization: Displays predictions and important metrics in the app.
 
-Tech Stack
+**Tech Stack**
 
 Programming Language: Python
 
-Libraries:
+**Libraries:**
 
-TensorFlow / PyTorch (Deep Learning Framework)
-
-OpenCV (Image Processing)
+PyTorch (Deep Learning Framework)
 
 NumPy, Pandas (Data Manipulation)
 
-Matplotlib, Seaborn (Visualization)
+Matplotlib
 
 Streamlit (Web Interface)
 
-Deployment: Streamlit Community Cloud
+**Deployment**: Streamlit Community Cloud
