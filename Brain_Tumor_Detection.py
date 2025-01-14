@@ -7,6 +7,8 @@ import torch.nn.functional as F
 from torchvision import transforms
 from PIL import Image
 
+SAMPLE_IMAGES_PATH = "sample_images"
+
 # Set Streamlit page configuration
 st.set_page_config(
     page_title="Brain Tumor Classification",
@@ -155,35 +157,64 @@ st.sidebar.info(
     - **Model:** Custom CNN
     - **Classes:** 17 tumor types
     - **Powered by:** PyTorch & Streamlit
-    - **Created by:** Group 51
+    - **Created by:** Tarun Tiwari
     """
 )
+# Upload an image or select from sample images
+st.sidebar.title("Select Image for Testing")
 
-uploaded_file = st.file_uploader(
-    "Upload MRI Image (jpg, png, jpeg)",
-    type=["jpg", "png", "jpeg"],
-    accept_multiple_files=False,
-    help="Upload an MRI scan to analyze."
-)
+# List sample images in the folder
+sample_images = os.listdir(SAMPLE_IMAGES_PATH)
 
-def predict(image):
-    image = transform(image).unsqueeze(0)
-    with torch.no_grad():
-        output = model(image)
-        _, predicted = torch.max(output, 1)
-    return label_map.get(predicted.item(), "Unknown Tumor Type")
+# Display the sample images as clickable thumbnails
+st.sidebar.write("Click on a sample image to test the model:")
 
-if uploaded_file:
-    col1, col2 = st.columns([1, 2])
+sample_images_selected = st.sidebar.selectbox("Select a sample image:", sample_images)
 
-    with col1:
-        st.image(Image.open(uploaded_file).convert("RGB"), caption="Uploaded MRI", use_column_width=True)
+# Show the selected image in the main area
+if sample_images_selected:
+    image_path = os.path.join(SAMPLE_IMAGES_PATH, sample_images_selected)
+    selected_image = Image.open(image_path).convert("RGB")
+    st.image(selected_image, caption=f"Selected Image: {sample_images_selected}", use_column_width=True)
 
-    with col2:
-        st.markdown("<h3 style='color: #FF5722;'>Classifying...</h3>", unsafe_allow_html=True)
-        prediction = predict(Image.open(uploaded_file).convert("RGB"))
-        st.success(f"Prediction: **{prediction}**")
-        st.snow()
+    # Prediction function
+    def predict(image):
+        image = transform(image).unsqueeze(0)
+        with torch.no_grad():
+            output = model(image)
+            _, predicted = torch.max(output, 1)
+        return label_map.get(predicted.item(), "Unknown Tumor Type")
+
+    # Display the prediction result
+    prediction = predict(selected_image)
+    st.success(f"Prediction: **{prediction}**")
+    st.snow()  # Snow effect for better UX
+
+# uploaded_file = st.file_uploader(
+#     "Upload MRI Image (jpg, png, jpeg)",
+#     type=["jpg", "png", "jpeg"],
+#     accept_multiple_files=False,
+#     help="Upload an MRI scan to analyze."
+# )
+
+# def predict(image):
+#     image = transform(image).unsqueeze(0)
+#     with torch.no_grad():
+#         output = model(image)
+#         _, predicted = torch.max(output, 1)
+#     return label_map.get(predicted.item(), "Unknown Tumor Type")
+
+# if uploaded_file:
+#     col1, col2 = st.columns([1, 2])
+
+#     with col1:
+#         st.image(Image.open(uploaded_file).convert("RGB"), caption="Uploaded MRI", use_column_width=True)
+
+#     with col2:
+#         st.markdown("<h3 style='color: #FF5722;'>Classifying...</h3>", unsafe_allow_html=True)
+#         prediction = predict(Image.open(uploaded_file).convert("RGB"))
+#         st.success(f"Prediction: **{prediction}**")
+#         st.snow()
 
 #Evaluation Metrices
 st.markdown("<h2 style='text-align: center; color: #2196F3;'>Evaluation Metrics</h2>", unsafe_allow_html=True)
