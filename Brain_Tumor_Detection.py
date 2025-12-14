@@ -160,7 +160,7 @@ st.sidebar.info(
     - **Model:** Custom CNN
     - **Classes:** 17 tumor types
     - **Powered by:** PyTorch & Streamlit
-    - **Created by:** Sandesh, Ameya, Ashlesha, Sushma
+    - **Created by:** Tarun Tiwari
     """
 )
 # Upload an image or select from sample images
@@ -286,4 +286,5 @@ with st.expander("Calibration Curve"):
     st.image("Screenshot 2024-10-13 235842.png", caption="Calibration Curve", use_column_width=True)
 
 # st.write("Model is still incomplete and need to be added more features like confimations, symptoms, etc.")
+
 
